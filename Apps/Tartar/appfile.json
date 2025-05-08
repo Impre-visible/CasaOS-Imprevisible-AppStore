@@ -1,100 +1,79 @@
 {
     "version": "2.0",
-    "title": "Sonarr",
-    "name": "sonarr",
-    "icon": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sonarr/icon.png",
-    "tagline": "The PVR for Usenet and BitTorrent users",
-    "overview": "Sonarr is a PVR for Usenet and BitTorrent users. It can monitor multiple RSS feeds for new episodes of your favorite shows and will grab, sort and rename them. It can also be configured to automatically upgrade the quality of files already downloaded when a better quality format becomes available.",
-    "thumbnail": "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Radarr/thumbnail.jpg",
+    "title": "Tartar",
+    "name": "Tartar",
+    "icon": "https://raw.githubusercontent.com/Impre-visible/tartar/refs/heads/main/frontend/public/favicon.ico",
+    "tagline": "Rate your steak tartares.",
+    "overview": "Rate your steak tartares, view them in a list view, or a map view. Support light/dark theme.",
+    "thumbnail": "https://github.com/Impre-visible/CasaOS-Imprevisible-AppStore/blob/main/Apps/Tartar/thumbnail.png?raw=true",
     "screenshots": [
-        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sonarr/screenshot-1.jpg",
-        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sonarr/screenshot-2.jpg",
-        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sonarr/screenshot-3.jpg",
-        "https://cdn.jsdelivr.net/gh/IceWhaleTech/CasaOS-AppStore@main/Apps/Sonarr/screenshot-4.jpg"
+        "https://github.com/Impre-visible/CasaOS-Imprevisible-AppStore/blob/main/Apps/Tartar/screenshot-1.png?raw=true",
+        "https://github.com/Impre-visible/CasaOS-Imprevisible-AppStore/blob/main/Apps/Tartar/screenshot-2.png?raw=true"
     ],
     "category": [
         "Media"
     ],
     "developer": {
-        "name": "Sonarr",
-        "website": "https://sonarr.tv/",
+        "name": "Impre-visible",
+        "website": "https://github.com/Impre-visible",
         "donate_text": "", 
         "donate_link": ""
     },
     "adaptor": {
-        "name": "CasaOS Team",
-        "website": "https://www.casaos.io",
+        "name": "Impre-visible",
+        "website": "https://github.com/Impre-visible",
         "donate_text": "", 
         "donate_link": ""
     },
-    "support": "https://discord.gg/knqAbbBbeX",
-    "website": "https://www.casaos.io",
+    "support": "",
+    "website": "",
     "container": {
-        "image": "linuxserver/sonarr:latest",
+        "image": "imprevisible/tartar:latest",
         "shell": "bash",
         "privileged": false,
         "network_model": "bridge",
         "web_ui": {
-            "http": "8989",
+            "http": "80",
             "path": "/"
         },
         "health_check": "",
         "envs": [
             {
-                "key": "TZ",
-                "value": "$TZ",
+                "key": "DATABASE_URL",
+                "value": "postgresql://user:password@host/tartar?sslmode=require",
                 "configurable": "no",
-                "description": "TimeZone"
+                "description": "Database connection URL."
             },
             {
-                "key": "PUID",
-                "value": "$PUID",
+                "key": "GOOGLE_PLACES_API_KEY",
+                "value": "AiZ...",
                 "configurable": "no",
-                "description": "Run Sonarr as specified uid."
+                "description": "Google Places API key."
             },
             {
-                "key": "PGID",
-                "value": "$PGID",
+                "key": "OTP_CODE",
+                "value": "123456",
                 "configurable": "no",
-                "description": "Run Sonarr as specified gid."
+                "description": "One-Time Password code for creation/edition/deletion of data."
+            },
+            {
+                "key": "VITE_OTP_FORMAT",
+                "value": "XXX-XXX",
+                "configurable": "no",
+                "description": "Format of the OTP."
             }
         ],
         "ports": [
             {
-                "container": "8989",
-                "host": "8989",
+                "container": "80",
+                "host": "80",
                 "type": "tcp",
                 "allocation": "preferred",
                 "configurable": "advanced",
                 "description": "WebUI HTTP Port"
             }
         ],
-        "volumes": [
-            {
-                "container": "/config",
-                "host": "/DATA/AppData/$AppID/config",
-                "mode": "rw",
-                "allocation": "automatic",
-                "configurable": "no",
-                "description": "Sonarr config directory."
-            },
-            {
-                "container": "/tv",
-                "host": "/DATA/Media/TV Shows",
-                "mode": "rw",
-                "allocation": "automatic",
-                "configurable": "advanced",
-                "description": "Sonarr tv directory."
-            },
-            {
-                "container": "/downloads",
-                "host": "/DATA/Downloads",
-                "mode": "rw",
-                "allocation": "automatic",
-                "configurable": "advanced",
-                "description": "Sonarr downloads directory."
-            }
-        ],
+        "volumes": [],
         "devices": [],
         "constraints": {
             "min_memory": 256,
