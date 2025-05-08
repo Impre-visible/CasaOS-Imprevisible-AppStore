@@ -1,0 +1,65 @@
+name: tartar
+services:
+  tartar:
+    environment:
+      - DATABASE_URL=postgresql://user:password@host/tartar?sslmode=require
+      - GOOGLE_PLACES_API_KEY=AiZ...
+      - OTP_CODE=123456
+      - VITE_OTP_FORMAT=XXX-XXX
+    image: imprevisible/tartar:latest
+    icon: "https://raw.githubusercontent.com/Impre-visible/tartar/refs/heads/main/frontend/public/favicon.ico"
+    ports:
+      - target: 80
+        published: ${WEBUI_PORT:-8088}
+        protocol: tcp
+    restart: unless-stopped
+    network_mode: bridge
+    privileged: false
+    container_name: "tartar"
+    x-casaos:
+      envs:
+        - container: DATABASE_URL
+          description:
+            en_us: Database connection URL
+            fr_fr: URL de connexion à la base de données
+        - container: GOOGLE_PLACES_API_KEY
+          description:
+            en_us: Google Places API key
+            fr_fr: Clé API Google Places
+        - container: OTP_CODE
+          description:
+            en_us: One-Time Password code for creation/edition/deletion of data
+            fr_fr: Code de mot de passe à usage unique
+        - container: VITE_OTP_FORMAT
+          description:
+            en_us: Format of the OTP
+            fr_fr: Format de l'OTP
+      ports:
+        - container: "80"
+          description:
+            en_us: WebUI HTTP Port
+            fr_fr: Port HTTP de l'interface Web
+x-casaos:
+  architectures:
+    - amd64
+    - arm64
+  main: tartar
+  author: Impre-visible
+  category: Notes
+  description:
+    en_us: An application for rating steak tartares.
+    fr_fr: Application de notation de steak tartares.
+  icon: "https://raw.githubusercontent.com/Impre-visible/tartar/refs/heads/main/frontend/public/favicon.ico"
+  screenshot_link:
+    - https://github.com/Impre-visible/CasaOS-Imprevisible-AppStore/blob/main/Apps/Tartar/screenshot-1.png?raw=true
+    - https://github.com/Impre-visible/CasaOS-Imprevisible-AppStore/blob/main/Apps/Tartar/screenshot-2.png?raw=true
+  thumbnail: https://github.com/Impre-visible/CasaOS-Imprevisible-AppStore/blob/main/Apps/Tartar/thumbnail.png?raw=true
+  tagline:
+    en_us: Rate your steak tartares
+    fr_fr: Notez vos steaks tartares
+  title:
+    en_us: Tartar
+  index: /
+  port_map: ${WEBUI_PORT:-8088}
+  scheme: http
+  store_app_id: tartar
